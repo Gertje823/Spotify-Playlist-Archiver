@@ -20,7 +20,7 @@ def addtrack2DB(Artist, Title, Album, Release_date, Cover, Duration , Popularity
     conn = sqlite3.connect('Spotify_Archive.sqlite')
     c = conn.cursor()
     params = (Artist, Title, Album, Release_date, Cover, Duration , Popularity, Spotify_url, Track_number, Playlist, Added_at, Added_by)
-    #print(params)
+    print(params)
     try:
         c.execute("INSERT INTO Tracks(Artist, Title, Album, Release_date, Cover, Duration , Popularity, Spotify_url, Track_number, Playlist, Added_at, Added_by)VALUES (?,?,?,?,?,?,?,?,?,?,?,?)", params)
         conn.commit()
@@ -32,7 +32,7 @@ def addplaylist2DB(Owner, Name, Thumbnail, Description, Collaborative, Playlist_
     conn = sqlite3.connect('Spotify_Archive.sqlite')
     c = conn.cursor()
     params = (Owner, Name, Thumbnail, Description, Collaborative, Playlist_id, Spotify_url, Total_tracks)
-    #print(params)
+    print(params)
     try:
         c.execute(
             "INSERT INTO Playlists(Owner, Name, Thumbnail, Description, Collaborative, Playlist_id, Spotify_url, Total_tracks)VALUES (?,?,?,?,?,?,?,?)",
@@ -46,7 +46,7 @@ def addprofile2DB(Username, Display_name, Followers, Avatar, Spotify_url):
     conn = sqlite3.connect('Spotify_Archive.sqlite')
     c = conn.cursor()
     params = (Username, Display_name, Followers, Avatar, Spotify_url)
-    #print(params)
+    print(params)
     try:
         c.execute(
             "INSERT INTO Userprofiles(Username, Display_name, Followers, Avatar, Spotify_url)VALUES (?,?,?,?,?)",
@@ -105,8 +105,7 @@ def get_playlist_data(user):
             r4 = requests.get(url, headers=headers)
             total = r4.json()['total']
         while total > offset:
-            print(total)
-            print(offset)
+            print(f"Total tracks: {total}")
             url = f"{item['tracks']['href']}?offset={offset}&limit=100&market=NL"
             offset += 100
             headers = {'Accept': 'application/json', 'Content-Type': 'application/json',
